@@ -1,3 +1,35 @@
-<p>
-  add works!
-</p>
+<div>
+  <br>
+  <mat-card>
+    <section class="mat-typography">
+      <h3>Create A New Task</h3>
+    </section>
+    <mat-divider></mat-divider>
+    <br>
+    <form [formGroup]="createForm" class="create-form">
+      <mat-form-field class="field-full-width">
+        <input matInput placeholder="Task title" formControlName="Task" #task>
+      </mat-form-field>
+      <mat-form-field class="field-full-width">
+          <textarea matInput placeholder="Start Date" formControlName="start_date" #start_date></textarea>
+        </mat-form-field>
+      <mat-form-field class="field-full-width">
+        <input matInput placeholder="End Date" formControlName="end_date" #end_date>
+      </mat-form-field>
+      <mat-form-field class="field-full-width">
+        <input matInput placeholder="Parent" formControlName="parent" #parent>
+      </mat-form-field>
+      <mat-form-field class="field-full-width">
+        <mat-select placeholder="Priority" formControlName="priority" #priority>
+          <mat-option value="Low">Low</mat-option>
+          <mat-option value="Medium">Medium</mat-option>
+          <mat-option value="High">High</mat-option>
+        </mat-select>  
+      </mat-form-field>
+      <mat-divider></mat-divider>
+      <br><br>
+      <button mat-raised-button color="accent" routerLink="/view">Back</button>
+      <button type="submit" (click)="createTask(task.value, start_date.value, end_date.value, priority.value, parent.value)" [disabled]="createForm.prestine || createForm.invalid" mat-raised-button color="primary">Save</button>
+    </form>
+  </mat-card>
+</div>

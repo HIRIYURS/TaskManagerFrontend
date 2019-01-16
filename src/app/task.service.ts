@@ -42,4 +42,9 @@ export class TaskService {
   deleteTask(id) {
     return this.http.get(`${this.uri}/tasks/delete/${id}`);
   }
+
+  endTask(id) {
+    return this.http.get(`${this.uri}/tasks/endtask/${id}`);
+  }
+
 }
