@@ -8,23 +8,26 @@
     <br>
     <form [formGroup]="createForm" class="create-form">
       <mat-form-field class="field-full-width">
-        <input matInput placeholder="Task title" formControlName="Task" #task>
+        <input matInput placeholder="Task title" formControlName="task" #task>
       </mat-form-field>
-      <mat-form-field class="field-full-width">
-          <textarea matInput placeholder="Start Date" formControlName="start_date" #start_date></textarea>
-        </mat-form-field>
-      <mat-form-field class="field-full-width">
-        <input matInput placeholder="End Date" formControlName="end_date" #end_date>
+      <mat-form-field>
+        <input matInput [matDatepicker]="startDate" placeholder="Task Start Date" formControlName="start_date" #start_date>
+        <mat-datepicker-toggle matSuffix [for]="startDate"></mat-datepicker-toggle>
+        <mat-datepicker #startDate></mat-datepicker>
       </mat-form-field>
+      <mat-form-field>
+        <input matInput [matDatepicker]="endDate" placeholder="Task End date" formControlName="end_date" #end_date>
+        <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
+        <mat-datepicker #endDate></mat-datepicker>
+      </mat-form-field>  
       <mat-form-field class="field-full-width">
         <input matInput placeholder="Parent" formControlName="parent" #parent>
       </mat-form-field>
       <mat-form-field class="field-full-width">
-        <mat-select placeholder="Priority" formControlName="priority" #priority>
-          <mat-option value="Low">Low</mat-option>
-          <mat-option value="Medium">Medium</mat-option>
-          <mat-option value="High">High</mat-option>
-        </mat-select>  
+        <input matInput type="number" placeholder="Priority" formControlName="priority" #priority>
+        <span matPrefix="0"></span>
+        <mat-slider min="1" max="30" step="1" value="10" thumbLabel formControlName="priority"></mat-slider>
+        <span matSuffix="30"></span>
       </mat-form-field>
       <mat-divider></mat-divider>
       <br><br>

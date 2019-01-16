@@ -18,23 +18,51 @@ export class TaskService {
   }
 
   addTask(task, start_date, end_date, priority, parent) {
-    const Task = {
-      task: task,
-      start_date: start_date,
-      end_date: end_date,
-      priority: priority,
-      parent: parent
+    if (priority == "") {
+      priority = "10";
     }
-    return this.http.post(`${this.uri}/tasks/add`, Task);
+    let Task ={};
+    if (parent == "") {
+      // Don't pass the parent
+      Task = {
+        task: task,
+        start_date: start_date,
+        end_date: end_date,
+        priority: priority
+      }
+    } else {
+      Task = {
+        task: task,
+        start_date: start_date,
+        end_date: end_date,
+        priority: priority,
+        parent: parent
+      }
+    }
+   return this.http.post(`${this.uri}/tasks/add`, Task);
   }
 
   editTask(id, task, start_date, end_date, priority, parent) {
-    const Task = {
-      task: task,
-      start_date: start_date,
-      end_date: end_date,
-      priority: priority,
-      parent: parent
+    if (priority == "") {
+       priority = "10";
+    }
+    let Task = {};
+    if (parent == "") {
+      // Don't pass the parent
+      Task = {
+        task: task,
+        start_date: start_date,
+        end_date: end_date,
+        priority: priority
+      }
+    } else {
+      Task = {
+        task: task,
+        start_date: start_date,
+        end_date: end_date,
+        priority: priority,
+        parent: parent
+      }
     }
     return this.http.post(`${this.uri}/tasks/update/${id}`, Task);
   }  
