@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatTableDataSource } from '@angular/material';
+import {formatDate } from '@angular/common';
 
 import { Task } from '../../task.model';
 import { TaskService } from '../../task.service';
@@ -14,6 +15,7 @@ export class ViewComponent implements OnInit {
 
   tasks: Task[];
   displayedColumns = ['task', 'parent', 'start_date', 'end_date', 'priority', 'actions'];
+  dataSource;
 
   constructor(private taskService: TaskService, private router: Router) { }
 
@@ -22,6 +24,7 @@ export class ViewComponent implements OnInit {
     //   console.log(tasks);
     // });
     this.fetchTasks();
+    this.dataSource = new MatTableDataSource(this.tasks);
   }
 
   fetchTasks() {
@@ -44,4 +47,16 @@ export class ViewComponent implements OnInit {
     });
   }
 
+  formatDate(date: Date): string {
+    // const day = date.getDate();
+    // const month = date.getMonth();
+    // const year = date.getFullYear();
+    //return `${day}/${month}/${year}`;
+    return `01/16/2019`;
+    //return formatDate(date, "MM/DD/YYYY");
+  }
+
+  applyTaskFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
 }
