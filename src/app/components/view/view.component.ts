@@ -38,8 +38,8 @@ export class ViewComponent implements OnInit {
       .getTasks()
         .subscribe((data: Task[]) => {
           this.tasks = data;
-          console.log("Data requested...");
-          console.log(this.tasks);
+          // console.log("Data requested...");
+          // console.log(this.tasks);
           this.dataSource = new MatTableDataSource(this.tasks);
           this.dataSource.filterPredicate = this.taskFilterPredicate;
         });  

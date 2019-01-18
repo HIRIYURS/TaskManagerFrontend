@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TaskService } from '../../task.service';
+import { Task } from '../../task.model';
 
 @Component({
   selector: 'app-add',
@@ -11,6 +12,7 @@ import { TaskService } from '../../task.service';
 export class AddComponent implements OnInit {
 
   createForm: FormGroup;
+  parents: Task[];
 
   constructor(private taskService: TaskService, private fb: FormBuilder, private router: Router) { 
     this.createForm = this.fb.group({
@@ -29,6 +31,9 @@ export class AddComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.taskService.getTasks().subscribe((data: Task[]) => {
+      this.parents = data;
+    });
   }
 
 }

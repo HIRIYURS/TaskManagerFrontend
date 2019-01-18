@@ -22,8 +22,12 @@
           <mat-datepicker #endpicker></mat-datepicker>
       </mat-form-field>  
       <mat-form-field class="field-full-width">
-        <span class="label">Parent </span>
-        <input matInput placeholder="Parent" formControlName="parent" #parent>
+          <span class="label">Parent </span>
+          <mat-select placeholder="Parent Task" name="parent" formControlName="parent" #parent>
+              <mat-option *ngFor="let myparent of parents" [value]="myparent._id">
+                {{myparent.task}}
+              </mat-option>
+            </mat-select>  
       </mat-form-field>
       <mat-form-field class="field-full-width">
         <input matInput type="number" placeholder="Priority" formControlName="priority" #priority>
@@ -34,7 +38,7 @@
       <mat-divider></mat-divider>
       <br><br>
       <button mat-raised-button color="accent" routerLink="/view">Back</button>
-      <button type="submit" (click)="updateTask(task.value, startdate.value, enddate.value, priority.value, parent.value)" [disabled]="updateForm.prestine || updateForm.invalid" mat-raised-button color="primary">Save</button>
+      <button type="submit" (click)="updateTask(task.value, startdate.value, enddate.value, priority.value, parent.value)" [disabled]="updateForm.prestine || updateForm.invalid || updateForm.disabled" mat-raised-button color="primary">Save</button>
     </form>
   </mat-card>
 </div>

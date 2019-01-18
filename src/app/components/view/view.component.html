@@ -12,10 +12,10 @@
       <input matInput (keyup)="applyParentTaskFilter($event.target.value)" placeholder="Parent">
     </mat-form-field>
     <mat-form-field>
-      <input matInput type="number" min="1" max="30" (keyup)="applyPriorityFromFilter($event.target.value)" placeholder="Priority">
+      <input matInput type="number" min="1" max="30" (keyup)="applyPriorityFromFilter($event.target.value)" placeholder="Priority From">
     </mat-form-field>
     <mat-form-field>
-      <input matInput type="number" min="1" max="30" (keyup)="applyPriorityToFilter($event.target.value)" placeholder="Priority">
+      <input matInput type="number" min="1" max="30" (keyup)="applyPriorityToFilter($event.target.value)" placeholder="Priority To">
     </mat-form-field>    
     <mat-form-field>
       <input matInput type="Date" (keyup)="applyStartDateFilter($event.target.value)">

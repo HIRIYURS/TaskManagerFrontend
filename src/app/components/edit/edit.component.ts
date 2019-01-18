@@ -27,6 +27,18 @@ export class EditComponent implements OnInit {
     parent: new FormControl()
   });
 
+  // parents: ParentObj[] = [
+  //   {
+  //     _id: "5c3f9fafb6a47e50b82938ec",
+  //     task: "Parent Task"
+  //   },
+  //   {
+  //     _id: "5c3c1678d104e54960669eb8",
+  //     task: "Second Parent"
+  //   }
+  // ];
+  parents: Task[];
+
   constructor(private taskService: TaskService, private router: Router, private route: ActivatedRoute, private snackBar: MatSnackBar, private fb: FormBuilder) {
     this.createForm();
   }
@@ -51,6 +63,12 @@ export class EditComponent implements OnInit {
         this.updateForm.get('enddate').setValue(this.task.end_date);
         this.updateForm.get('priority').setValue(this.task.priority);
         this.updateForm.get('parent').setValue(this.task.parent);
+        if (this.task.finished === true) {
+          this.updateForm.disable();
+        }        
+      });
+      this.taskService.getTasks().subscribe((data: Task[]) => {
+        this.parents = data;
       });
     });
   }
