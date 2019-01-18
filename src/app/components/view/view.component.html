@@ -9,22 +9,22 @@
       <input matInput (keyup)="applyTaskFilter($event.target.value)" placeholder="Task">
     </mat-form-field>
     <mat-form-field>
-      <input matInput (keyup)="applyTaskFilter($event.target.value)" placeholder="Parent Task">
-    </mat-form-field>
-    <br>
-    <mat-form-field>
-      <input matInput (keyup)="applyTaskFilter($event.target.value)" placeholder="Priority From">
+      <input matInput (keyup)="applyParentTaskFilter($event.target.value)" placeholder="Parent">
     </mat-form-field>
     <mat-form-field>
-      <input matInput (keyup)="applyTaskFilter($event.target.value)" placeholder="Priority To">
+      <input matInput type="number" min="1" max="30" (keyup)="applyPriorityFromFilter($event.target.value)" placeholder="Priority">
     </mat-form-field>
     <mat-form-field>
-      <input matInput type="date" (keyup)="applyStartDateFilter($event.target.value)" placeholder="Start Date">
-    </mat-form-field>
-    <mat-form-field>
-      <input matInput type="date" (keyup)="applyTaskFilter($event.target.value)" placeholder="End Date">
+      <input matInput type="number" min="1" max="30" (keyup)="applyPriorityToFilter($event.target.value)" placeholder="Priority">
     </mat-form-field>    
-    <table mat-table [dataSource]="tasks">
+    <mat-form-field>
+      <input matInput type="Date" (keyup)="applyStartDateFilter($event.target.value)">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput type="Date" (keyup)="applyEndDateFilter($event.target.value)">
+    </mat-form-field>
+
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
       <ng-container matColumnDef="task">
         <th mat-header-cell *matHeaderCellDef>Task</th>
         <td mat-cell *matCellDef="let element">{{element.task}}</td>

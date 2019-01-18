@@ -15,18 +15,24 @@ export class ViewComponent implements OnInit {
 
   tasks: Task[];
   displayedColumns = ['task', 'parent', 'start_date', 'end_date', 'priority', 'actions'];
-  dataSource;
+  dataSource: any;
+
+  filterValues = {
+    task: '',
+    start_date: '',
+    end_date: '',
+    priorityfrom: '',
+    priorityto: '',
+    parent: ''
+  };
 
   constructor(private taskService: TaskService, private router: Router) { }
 
   ngOnInit() {
-    // this.taskService.getTasks().subscribe((tasks) => {
-    //   console.log(tasks);
-    // });
     this.fetchTasks();
-    this.dataSource = new MatTableDataSource(this.tasks);
   }
 
+  
   fetchTasks() {
     this.taskService
       .getTasks()
@@ -34,6 +40,8 @@ export class ViewComponent implements OnInit {
           this.tasks = data;
           console.log("Data requested...");
           console.log(this.tasks);
+          this.dataSource = new MatTableDataSource(this.tasks);
+          this.dataSource.filterPredicate = this.taskFilterPredicate;
         });  
   }
 
@@ -56,7 +64,100 @@ export class ViewComponent implements OnInit {
     //return formatDate(date, "MM/DD/YYYY");
   }
 
+
+
+  taskFilterPredicate(data: Task, filter: string) {
+      // if (data.task.trim().toLowerCase().indexOf(filter.trim().toLowerCase()) !== -1) {
+      //   return true;
+      // } else {
+      //   return false;
+      // }
+      var searchTerms = JSON.parse(filter);
+
+      console.log("Data: ", data);
+      console.log("Data.task: ", data.task);
+      console.log("Data.priority: ", data.priority);
+      console.log("data.task.toLowerCase().indexOf(searchTerms.task): ", data.task.toLowerCase().indexOf(searchTerms.task));
+      console.log("data.priority.toString().toLowerCase().indexOf(searchTerms.priorityFrom)", 
+      data.priority.toString().toLowerCase().indexOf(searchTerms.priorityFrom));
+      console.log("data.priority.toString().toLowerCase().indexOf(2)", 
+      data.priority.toString().toLowerCase().indexOf("2"));
+      console.log("data.priority.toString().toLowerCase()", data.priority.toString().toLowerCase());
+      console.log("searchTerms: ", searchTerms);
+      console.log("data.parent", data.parent);
+      if (data.parent === undefined) {
+        console.log("data.parent", data.parent);
+        //console.log("data.parent.toLowerCase()", data.parent.toLowerCase());
+      }
+      console.log("searchTerms.priorityfrom: ", searchTerms.priorityfrom);
+
+
+      return (data.task.toLowerCase().indexOf(searchTerms.task) !== -1)
+        && (searchTerms.priorityfrom === "" || data.priority >= parseInt(searchTerms.priorityfrom))
+        && (searchTerms.priorityto === "" || data.priority <= parseInt(searchTerms.priorityto))
+        && (searchTerms.parent === "" ||
+              ((searchTerms.parent !== "" && data.parent !== undefined) 
+                         && (data.parent.toLowerCase().indexOf(searchTerms.parent) !== -1)))
+        && (data.start_date.toString().toLowerCase().indexOf(searchTerms.start_date) !== -1)
+        && (data.end_date.toString().toLowerCase().indexOf(searchTerms.end_date) !== -1);
+        
+        //&& ((data.parent === "" && searchTerms.parent === "")|| data.parent.toLowerCase().indexOf(searchTerms.parent) !== -1)
+        //data.priority.toString().toLowerCase().indexOf(searchTerms.priorityfrom) !== -1;
+  }
+
+  validateParentTask(data: Task,  parentTask: string) {
+    var retval = false;
+    if (parentTask !== "") {
+        if (data.parent === undefined) {
+          retval = false;
+        } else {
+          if (data.parent.toLowerCase().indexOf(parentTask) !== -1) {
+            retval = true;
+          } else {
+            retval = false;
+          }
+        }
+    } else {
+      retval = true;
+    }
+    return retval;
+  }
+    
+  
   applyTaskFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+    //this.dataSource.filter = filterValue.trim().toLowerCase();
+    this.filterValues.task = filterValue;
+    this.dataSource.filter = JSON.stringify(this.filterValues).toLowerCase();
+
+  }
+
+  applyPriorityFromFilter(filterValue: string) {
+    this.filterValues.priorityfrom = filterValue;
+    this.dataSource.filter = JSON.stringify(this.filterValues).toLowerCase();
+    //this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  applyPriorityToFilter(filterValue: string) {
+    this.filterValues.priorityto = filterValue;
+    this.dataSource.filter = JSON.stringify(this.filterValues).toLowerCase();
+    //this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  applyParentTaskFilter(filterValue: string) {
+    this.filterValues.parent = filterValue;
+    this.dataSource.filter = JSON.stringify(this.filterValues).toLowerCase();
+    //this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  applyStartDateFilter(filterValue: string) {
+    this.filterValues.start_date = filterValue;
+    this.dataSource.filter = JSON.stringify(this.filterValues).toLowerCase();
+    //this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  applyEndDateFilter(filterValue: string) {
+    this.filterValues.end_date = filterValue;
+    this.dataSource.filter = JSON.stringify(this.filterValues).toLowerCase();
+    //this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 }
