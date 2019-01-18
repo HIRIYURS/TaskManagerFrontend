@@ -67,30 +67,7 @@ export class ViewComponent implements OnInit {
 
 
   taskFilterPredicate(data: Task, filter: string) {
-      // if (data.task.trim().toLowerCase().indexOf(filter.trim().toLowerCase()) !== -1) {
-      //   return true;
-      // } else {
-      //   return false;
-      // }
       var searchTerms = JSON.parse(filter);
-
-      console.log("Data: ", data);
-      console.log("Data.task: ", data.task);
-      console.log("Data.priority: ", data.priority);
-      console.log("data.task.toLowerCase().indexOf(searchTerms.task): ", data.task.toLowerCase().indexOf(searchTerms.task));
-      console.log("data.priority.toString().toLowerCase().indexOf(searchTerms.priorityFrom)", 
-      data.priority.toString().toLowerCase().indexOf(searchTerms.priorityFrom));
-      console.log("data.priority.toString().toLowerCase().indexOf(2)", 
-      data.priority.toString().toLowerCase().indexOf("2"));
-      console.log("data.priority.toString().toLowerCase()", data.priority.toString().toLowerCase());
-      console.log("searchTerms: ", searchTerms);
-      console.log("data.parent", data.parent);
-      if (data.parent === undefined) {
-        console.log("data.parent", data.parent);
-        //console.log("data.parent.toLowerCase()", data.parent.toLowerCase());
-      }
-      console.log("searchTerms.priorityfrom: ", searchTerms.priorityfrom);
-
 
       return (data.task.toLowerCase().indexOf(searchTerms.task) !== -1)
         && (searchTerms.priorityfrom === "" || data.priority >= parseInt(searchTerms.priorityfrom))
@@ -100,9 +77,7 @@ export class ViewComponent implements OnInit {
                          && (data.parent.toLowerCase().indexOf(searchTerms.parent) !== -1)))
         && (data.start_date.toString().toLowerCase().indexOf(searchTerms.start_date) !== -1)
         && (data.end_date.toString().toLowerCase().indexOf(searchTerms.end_date) !== -1);
-        
-        //&& ((data.parent === "" && searchTerms.parent === "")|| data.parent.toLowerCase().indexOf(searchTerms.parent) !== -1)
-        //data.priority.toString().toLowerCase().indexOf(searchTerms.priorityfrom) !== -1;
+
   }
 
   validateParentTask(data: Task,  parentTask: string) {
