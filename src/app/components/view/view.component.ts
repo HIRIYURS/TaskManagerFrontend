@@ -38,8 +38,18 @@ export class ViewComponent implements OnInit {
       .getTasks()
         .subscribe((data: Task[]) => {
           this.tasks = data;
+          this.tasks.forEach((tmptask: Task) => {
+            //this.taskService.getTaskById('5c3c1678d104e54960669eb8').subscribe((res: Task) => {
+              if (tmptask.parent !== undefined) {
+                this.taskService.getTaskById(tmptask.parent).subscribe((res: Task) => {  
+                  var restask: Task;
+                  restask = res;
+                  tmptask.parent = restask.task;
+              });
+            }
+          });
           // console.log("Data requested...");
-          // console.log(this.tasks);
+          console.log(this.tasks);
           this.dataSource = new MatTableDataSource(this.tasks);
           this.dataSource.filterPredicate = this.taskFilterPredicate;
         });  

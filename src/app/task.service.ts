@@ -18,11 +18,11 @@ export class TaskService {
   }
 
   addTask(task, start_date, end_date, priority, parent) {
-    if (priority == "") {
+    if (priority === undefined) {
       priority = "10";
     }
     let Task ={};
-    if (parent == "") {
+    if (parent === undefined) {
       // Don't pass the parent
       Task = {
         task: task,
@@ -43,17 +43,17 @@ export class TaskService {
   }
 
   editTask(id, task, start_date, end_date, priority, parent) {
-    if (priority == "") {
+    if (priority === undefined) {
        priority = "10";
     }
     let Task = {};
-    if (parent == "") {
+    if (parent === undefined) {
       // Don't pass the parent
       Task = {
         task: task,
         start_date: start_date,
         end_date: end_date,
-        priority: priority
+        priority: priority,
       }
     } else {
       Task = {

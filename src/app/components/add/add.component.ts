@@ -20,7 +20,7 @@ export class AddComponent implements OnInit {
       start_date: '',
       end_date: '',
       parent: '',
-      priority: ''
+      priority: 15
     });    
   }
 

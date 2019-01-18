@@ -74,6 +74,7 @@ export class EditComponent implements OnInit {
   }
 
   updateTask(task, startdate, enddate, priority, parent) {
+    console.log("parent: ", parent);
     this.taskService.editTask(this.id, task, startdate, enddate, priority, parent).subscribe(() => {
       this.snackBar.open('Task updated Successfully!', 'OK', {
         duration: 3000
