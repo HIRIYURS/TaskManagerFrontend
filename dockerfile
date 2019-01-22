@@ -1,4 +1,4 @@
-FROM node:8
+FROM node
 RUN mkdir -p /usr/src/taskmgrangapp
 WORKDIR /usr/src/taskmgrangapp
 COPY package.json /usr/src/taskmgrangapp
